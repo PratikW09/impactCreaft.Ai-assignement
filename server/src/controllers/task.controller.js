@@ -128,3 +128,23 @@ export const calculateProjectDuration = async (req, res) => {
     sendError(res, 500, "Internal Server Error");
   }
 };
+
+/**
+ * Controller to delete all tasks from the database.
+ * @route DELETE /api/tasks
+ * @access Public
+ */
+export const deleteAllTasks = async (req, res) => {
+  try {
+    // Delete all tasks
+    const result = await Task.deleteMany({});
+    
+    // Send success response with deletion count
+    sendSuccess(res, 200, "All tasks deleted successfully", {
+      deletedCount: result.deletedCount
+    });
+  } catch (error) {
+    console.error("Error deleting tasks:", error.message);
+    sendError(res, 500, "Internal Server Error");
+  }
+};
